@@ -423,7 +423,7 @@ Transform:
   m_GameObject: {fileID: 584471909}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.5, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 1005170040}
   m_Layer: 11
   m_Name: RightWall
-  m_TagString: Block
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -807,7 +807,7 @@ GameObject:
   - component: {fileID: 1093151231}
   m_Layer: 11
   m_Name: TopWall
-  m_TagString: Block
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1141,7 +1141,7 @@ GameObject:
   - component: {fileID: 1828145985}
   m_Layer: 11
   m_Name: LeftWall
-  m_TagString: Block
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

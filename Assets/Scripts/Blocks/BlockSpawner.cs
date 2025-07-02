@@ -15,7 +15,7 @@ namespace SuperBreakout.Blocks
         [SerializeField] private Vector2 blockSize = new Vector2(0.9f, 0.4f);
         
         [Header("Difficulty")]
-        [SerializeField] private int[] rowHealthValues = new int[] { 3, 3, 2, 2, 1 };
+        [SerializeField] private int[] rowHealthValues = new int[] { 1, 1, 1, 1, 1 }; // 全て1ヒットで破壊
         [SerializeField] private int[] rowScoreValues = new int[] { 30, 30, 20, 20, 10 };
         [SerializeField] private Color[] rowColors = new Color[] { Color.red, Color.red, Color.yellow, Color.yellow, Color.green };
         

@@ -1,4 +1,5 @@
 using UnityEngine;
+using SuperBreakout.Blocks;
 
 namespace SuperBreakout.Ball
 {
@@ -76,7 +77,7 @@ namespace SuperBreakout.Ball
         {
             Debug.Log($"Ball hit: {other.name} with tag: {other.tag}");
             
-            if (other.CompareTag("Wall") || other.CompareTag("Block"))
+            if (other.CompareTag("Wall"))
             {
                 HandleWallCollision(other);
             }
@@ -91,6 +92,24 @@ namespace SuperBreakout.Ball
             else if (other.CompareTag("Finish"))
             {
                 HandleDeathZone();
+            }
+        }
+        
+        private void OnCollisionEnter(Collision collision)
+        {
+            Debug.Log($"Ball collision: {collision.gameObject.name} with tag: {collision.gameObject.tag}");
+            
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                HandleWallCollision(collision.collider);
+            }
+            else if (collision.gameObject.CompareTag("Player"))
+            {
+                HandlePaddleCollision(collision.collider);
+            }
+            else if (collision.gameObject.CompareTag("Block"))
+            {
+                HandleBlockCollision(collision.collider);
             }
         }
         
@@ -119,6 +138,14 @@ namespace SuperBreakout.Ball
         {
             Vector3 normal = GetCollisionNormal(block);
             velocity = Vector3.Reflect(velocity.normalized, normal) * currentSpeed;
+            
+            // ブロックにダメージを与える
+            Block blockComponent = block.GetComponent<Block>();
+            if (blockComponent != null)
+            {
+                blockComponent.SendMessage("TakeDamage", SendMessageOptions.DontRequireReceiver);
+                Debug.Log("Sent damage message to block");
+            }
         }
         
         private void HandleDeathZone()

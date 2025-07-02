@@ -39,19 +39,23 @@ namespace SuperBreakout.Blocks
         
         private void OnTriggerEnter(Collider other)
         {
+            Debug.Log($"Block hit by: {other.name} with tag: {other.tag}");
             if (other.CompareTag("Ball"))
             {
+                Debug.Log("Ball tag matched! Taking damage.");
                 TakeDamage();
             }
         }
         
-        private void TakeDamage()
+        public void TakeDamage()
         {
             currentHealth--;
+            Debug.Log($"Block took damage! Health: {currentHealth}/{health}");
             OnBlockHit?.Invoke();
             
             if (currentHealth <= 0)
             {
+                Debug.Log("Block health depleted, destroying...");
                 DestroyBlock();
             }
             else
