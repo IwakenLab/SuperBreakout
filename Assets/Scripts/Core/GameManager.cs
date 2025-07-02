@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using SuperBreakout.Player;
 using SuperBreakout.Ball;
+using UnityEngine.Serialization;
 using SuperBreakout.Blocks;
 
 namespace SuperBreakout.Core
@@ -14,7 +15,8 @@ namespace SuperBreakout.Core
         
         [Header("References")]
         [SerializeField] private PaddleController paddle;
-        [SerializeField] private BallController ball;
+        [FormerlySerializedAs("ball")]
+        [SerializeField] private MonoBehaviour ballController; // BallController or BallController3D
         [SerializeField] private Transform ballStartPosition;
         
         [Header("UI References")]
@@ -76,8 +78,13 @@ namespace SuperBreakout.Core
         
         private void SubscribeToEvents()
         {
-            if (ball != null)
-                ball.OnBallLost += HandleBallLost;
+            if (ballController != null)
+            {
+                if (ballController is BallController bc)
+                    bc.OnBallLost += HandleBallLost;
+                else if (ballController is BallController3D bc3d)
+                    bc3d.OnBallLost += HandleBallLost;
+            }
             
             Block.OnBlockDestroyed += HandleBlockDestroyed;
             Block.OnBlockHit += HandleBlockHit;
@@ -85,8 +92,13 @@ namespace SuperBreakout.Core
         
         private void UnsubscribeFromEvents()
         {
-            if (ball != null)
-                ball.OnBallLost -= HandleBallLost;
+            if (ballController != null)
+            {
+                if (ballController is BallController bc)
+                    bc.OnBallLost -= HandleBallLost;
+                else if (ballController is BallController3D bc3d)
+                    bc3d.OnBallLost -= HandleBallLost;
+            }
             
             Block.OnBlockDestroyed -= HandleBlockDestroyed;
             Block.OnBlockHit -= HandleBlockHit;
@@ -107,9 +119,16 @@ namespace SuperBreakout.Core
             }
             else
             {
-                if (Input.GetKeyDown(KeyCode.Space) && ball != null)
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    ball.Launch();
+                    Debug.Log("Space key pressed! Ball: " + (ballController != null ? "exists" : "null"));
+                    if (ballController != null)
+                    {
+                        if (ballController is BallController bc)
+                            bc.Launch();
+                        else if (ballController is BallController3D bc3d)
+                            bc3d.Launch();
+                    }
                 }
             }
         }
@@ -152,9 +171,12 @@ namespace SuperBreakout.Core
         
         private void ResetBallPosition()
         {
-            if (ball != null && ballStartPosition != null)
+            if (ballController != null && ballStartPosition != null)
             {
-                ball.ResetBall(ballStartPosition.position);
+                if (ballController is BallController bc)
+                    bc.ResetBall(ballStartPosition.position);
+                else if (ballController is BallController3D bc3d)
+                    bc3d.ResetBall(ballStartPosition.position);
             }
         }
         

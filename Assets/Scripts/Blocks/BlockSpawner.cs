@@ -33,7 +33,8 @@ namespace SuperBreakout.Blocks
         {
             blockPrefab = new GameObject("BlockPrefab");
             blockPrefab.AddComponent<SpriteRenderer>();
-            blockPrefab.AddComponent<BoxCollider2D>();
+            BoxCollider collider = blockPrefab.AddComponent<BoxCollider>();
+            collider.isTrigger = true;
             blockPrefab.AddComponent<Block>();
             blockPrefab.tag = "Block";
             blockPrefab.SetActive(false);
